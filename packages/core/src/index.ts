@@ -24,13 +24,17 @@ function rehypeHyperscript(this: unknown, options: { h: CreateElement }) {
 export default class VMarkRenderer<TResult extends object> {
   private processor: Processor
 
-  constructor(options: { h: CreateElement<TResult> }) {
+  constructor(options: { h: CreateElement<TResult>; sanitize?: boolean }) {
     this.processor = unified()
       .use(remarkParse)
       .use(remarkRehype, { allowDangerousHtml: true })
       .use(rehypeRaw)
-      .use(rehypeSanitize)
-      .use(rehypeHyperscript, { h: options.h })
+
+    if (options.sanitize !== false) {
+      this.processor.use(rehypeSanitize)
+    }
+
+    this.processor.use(rehypeHyperscript, { h: options.h })
   }
 
   async render(md: string) {
