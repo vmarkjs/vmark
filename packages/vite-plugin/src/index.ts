@@ -13,6 +13,7 @@ export default function plugin(): Plugin {
         )}])`,
       }
     },
+    sanitize: false,
   })
   return {
     name: '@vmark/vite-plugin',
