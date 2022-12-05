@@ -13,7 +13,7 @@
     "build": "rimraf dist && unbuild"
   },
   "dependencies": {
-    "@vmark/core": "workspace:^1.0.1",
+    "@vmark/core": "workspace:^1.0.3",
     "hash-sum": "^2.0.0"
   },
   "peerDependencies": {
