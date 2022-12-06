@@ -1,6 +1,6 @@
 {
   "name": "@vmark/vite-plugin",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "license": "MIT",
   "main": "dist/index.mjs",
@@ -13,7 +13,7 @@
     "build": "rimraf dist && unbuild"
   },
   "dependencies": {
-    "@vmark/core": "workspace:^1.0.3",
+    "@vmark/core": "workspace:^",
     "hash-sum": "^2.0.0"
   },
   "peerDependencies": {
