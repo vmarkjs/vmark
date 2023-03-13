@@ -1,6 +1,11 @@
-import { Processor, unified } from 'unified'
+import { Plugin, Processor, unified } from 'unified'
 import remarkParse from 'remark-parse'
+import remarkFrontmatter from 'remark-frontmatter'
+import { matter } from 'vfile-matter'
+import remarkGFM from 'remark-gfm'
+import remarkMath from 'remark-math'
 import remarkRehype from 'remark-rehype'
+import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import { toH } from 'hast-to-hyperscript'
@@ -12,6 +17,12 @@ type CreateElement<T = object> = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any[],
 ) => T
+
+function matterPlugin(): Plugin {
+  return (_, file) => {
+    matter(file)
+  }
+}
 
 // let's ignore typescript for this plugin
 function rehypeHyperscript(this: unknown, options: { h: CreateElement }) {
@@ -27,7 +38,12 @@ export default class VMarkRenderer<TResult extends object> {
   constructor(options: { h: CreateElement<TResult>; sanitize?: boolean }) {
     this.processor = unified()
       .use(remarkParse)
+      .use(remarkFrontmatter)
+      .use(matterPlugin as never)
+      .use(remarkMath)
+      .use(remarkGFM)
       .use(remarkRehype, { allowDangerousHtml: true })
+      .use(rehypeKatex)
       .use(rehypeRaw)
 
     if (options.sanitize !== false) {
@@ -38,7 +54,10 @@ export default class VMarkRenderer<TResult extends object> {
   }
 
   async render(md: string) {
-    const { result } = await this.processor.process(md)
-    return result as TResult
+    const { result, data } = await this.processor.process(md)
+    return {
+      result: result as TResult,
+      frontmatter: data.matter as Record<string, unknown> | undefined,
+    }
   }
 }

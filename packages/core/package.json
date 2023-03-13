@@ -13,10 +13,15 @@
   },
   "dependencies": {
     "hast-to-hyperscript": "^10.0.1",
+    "rehype-katex": "^6.0.2",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
+    "remark-frontmatter": "^4.0.1",
+    "remark-gfm": "^3.0.1",
+    "remark-math": "^5.1.1",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2"
+    "unified": "^10.1.2",
+    "vfile-matter": "^4.0.1"
   }
 }
