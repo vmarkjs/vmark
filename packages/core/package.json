@@ -1,6 +1,6 @@
 {
   "name": "@vmark/core",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "license": "MIT",
   "main": "dist/index.mjs",
@@ -12,7 +12,7 @@
     "build": "rimraf dist && unbuild"
   },
   "dependencies": {
-    "hast-to-hyperscript": "^10.0.1",
+    "hast-to-hyperscript": "^10.0.3",
     "rehype-katex": "^6.0.2",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
