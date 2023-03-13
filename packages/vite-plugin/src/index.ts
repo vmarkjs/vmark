@@ -23,8 +23,9 @@ export default function plugin(): Plugin {
       }
 
       let code = `import { h } from "vue";`
-      const { text } = await renderer.render(src)
-      code += `\nexport const nodes = ${text};`
+      const { result, frontmatter } = await renderer.render(src)
+      code += `\nexport const nodes = ${result.text};`
+      code += `\nexport const frontmatter = ${JSON.stringify(frontmatter)};`
 
       // handle hmr
       code += `\nconst _default = { render() { return nodes } }`
