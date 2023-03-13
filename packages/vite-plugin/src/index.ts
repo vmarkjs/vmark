@@ -8,9 +8,11 @@ export default function plugin(): Plugin {
   const renderer = new VMarkRenderer({
     h(name, attr, children) {
       return {
-        text: `h("${name}", ${JSON.stringify(attr)}, [${children?.map(
-          (c) => c.text || JSON.stringify(c),
-        )}])`,
+        text: `h("${name}", ${JSON.stringify(attr)}, [${
+          children
+            ?.filter((c) => c !== '\n')
+            .map((c) => c.text || JSON.stringify(c)) || ''
+        }])`,
       }
     },
     sanitize: false,
