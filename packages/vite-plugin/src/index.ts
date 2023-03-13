@@ -21,6 +21,7 @@ export default function plugin(): Plugin {
       if (!mdRegex.test(id)) {
         return
       }
+
       let code = `import { h } from "vue";`
       const { text } = await renderer.render(src)
       code += `\nexport const nodes = ${text};`
@@ -29,8 +30,10 @@ export default function plugin(): Plugin {
       code += `\nconst _default = { render() { return nodes } }`
       code += `\n_default.__hmrId = '${hash(id)}'`
       code += `\n_default.__file = '${id}'`
-      code += `\n__VUE_HMR_RUNTIME__.createRecord(_default.__hmrId, _default)`
-      code += `\nimport.meta.hot.accept(({ default: _default }) => { __VUE_HMR_RUNTIME__.rerender(_default.__hmrId, _default.render) })`
+      code += `\nif (typeof __VUE_HMR_RUNTIME__ !== undefined) {
+  __VUE_HMR_RUNTIME__.createRecord(_default.__hmrId, _default)
+  import.meta.hot.accept(({ default: _default }) => { __VUE_HMR_RUNTIME__.rerender(_default.__hmrId, _default.render) })
+}`
       code += `\nexport default _default`
       return code
     },
