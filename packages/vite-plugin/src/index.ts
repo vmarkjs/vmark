@@ -33,6 +33,8 @@ export default function plugin(): Plugin {
       code += `\n_default.__file = '${id}'`
       code += `\nif (typeof __VUE_HMR_RUNTIME__ !== 'undefined') {
   __VUE_HMR_RUNTIME__.createRecord(_default.__hmrId, _default)
+}
+if (import.meta.hot) {
   import.meta.hot.accept(({ default: _default }) => { __VUE_HMR_RUNTIME__.rerender(_default.__hmrId, _default.render) })
 }`
       code += `\nexport default _default`
